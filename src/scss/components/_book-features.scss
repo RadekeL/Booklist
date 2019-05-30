@@ -1,0 +1,45 @@
+.book-features__window{
+    @include flexbox(center,flex-start);
+    flex-direction: column;
+    // position: absolute;
+    position: relative;
+    background: linear-gradient(#93a5cf , #e4efe9);
+    width: 100%;
+    top: 0%;   // JS: ZMIANA położenia tego paska
+    left: 0;
+    transition: .9s;
+    // background-color: red;
+
+
+}
+
+
+.book-features__option{
+    @include flexbox(center,space-around);
+    // position: relative; 
+    width: 75%;
+    // background-color: red;
+    
+    line-height: $book-features-height;
+}
+
+.book-features__input{
+    width: 25%;
+    border-radius: 5px;
+    border: none;
+}
+
+.book-features__button{
+   background-color: black;
+   color: #00B7FF;
+   border: none;    
+//    padding: 3px 0;
+}   
+
+// .book-features__fas{
+//     position: absolute;
+//     top: 50%;
+//     right: 5%;
+//     transform: translateY(-50%);
+//     font-size: 1.2rem;
+// }

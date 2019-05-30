@@ -1,0 +1,15 @@
+.book-features{
+    // display: none;
+    position: absolute;
+    top: 30%;
+    width: 450px;
+    height: $book-features-height;
+    // height: 1000px;
+    // border: 1px solid black;
+    // background-color: cadetblue;
+    overflow: hidden;
+    transition: .9s;
+    &--active{
+        top: 52%;
+    }
+}

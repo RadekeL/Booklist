@@ -1,0 +1,18 @@
+.app{
+    // @include flexbox(center,center);
+    display: flex;
+    // flex-direction: column;
+    // justify-self: flex-start;
+    width: 100%;
+    // background-color: yellow;
+}
+
+.app__panel{
+        @include flexbox(center,center);
+    width: 100%;
+    flex-direction: column;
+    // background-color: blueviolet;
+    // margin: 0 auto;
+}
+
+

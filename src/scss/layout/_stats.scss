@@ -1,0 +1,36 @@
+.app-stats{
+    display: flex;
+    width: 0%;
+    padding-top: 10px;
+    transition: .5s;
+    z-index: 400;
+    background-color: sandybrown;
+    &:hover{
+        right: 3%;
+    }
+    &--active{
+        width: 50%;
+    }
+}
+
+.stats__btn{
+    display: flex;
+    flex-direction: column;
+    width: 10%;
+}
+
+.stats__toggle{
+    border-left: black 5px solid;   
+    padding: 10px;
+    font-size: 2rem;
+    color: black;
+    transition: .4s;
+    cursor: pointer;
+    &:hover{
+        color: #FA8072;
+    }
+}
+
+
+
+

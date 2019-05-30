@@ -1,0 +1,17 @@
+.app__title{
+    @include flexbox(center,center);
+    font-size: 1.5rem;
+    font-family: $josefin-sans;
+    height: 10vh;
+    
+}
+
+
+.app__input{
+    @include flexbox(center,center);
+    margin: 1vh 4vh 4vh 4vh;
+    &::placeholder{
+        font-size: .9rem;
+        color: rgb(146, 146, 146);
+    }
+}
