@@ -30,61 +30,63 @@
                         <button class="app-panel__button button" type="submit">Book add</button>
                     </form>
                 </section>
+                <section class="book-features">
+                    <div class="book-features__window">
+                        <div class="book-features__option">
+                            <h3>Author:</h3>
+                            <input type="text" placeholder="..." class="book-features__input book-features__author">
+                            <i class="book-features__next fas fa-arrow-right"></i>
+                        </div>
+                        <div class="book-features__option">
+                            <h3>Read:</h3>
+                            <button
+                                class="book-features__button book-features__read book-features__done book-features__next"
+                                id="Read">Yes</button>
+                            <button
+                                class="book-features__button book-features__read book-features__in-progress book-features__next"
+                                id="Still">No</button>
+                            <!-- <i class="book-features__fas fas fa-arrow-down"></i> -->
+                        </div>
+                        <div class="book-features__option">
+                            <h3>Language:</h3>
+                            <button
+                                class="book-features__button book-features__language book-features__polish book-features__next"
+                                id="Polish">Polish</button>
+                            <button
+                                class="book-features__button book-features__language book-features__english book-features__next"
+                                id="English">Engilsh</button>
+                            <button
+                                class="book-features__button book-features__language book-features__spanish book-features__next"
+                                id="Spanish">Spanish</button>
+                            <!-- <i class="book-features__fas fas fa-arrow-down"></i> -->
+                        </div>
+                        <div class="book-features__option">
+                            <h3>Time: [s]</h3>
+                            <input type="text" placeholder="..." class="book-features__input book-features__time">
+                            <i class="book-features__next fas book-features__time fa-arrow-right" id="time"></i>
+                        </div>
+                        <div class="book-features__option">
+                            <h3>Pages:</h3>
+                            <input type="text" placeholder="..."
+                                class="book-features__input book-features__pages-amount">
+                            <i class="book-features__next fas book-features__page fa-arrow-right" id="pages"></i>
+                        </div>
 
-                <div class="app-stats">
-                    <section class="stats__btn">
-                        <i class="stats__toggle fas fa-chart-bar"></i>
-                        <i class="stats__toggle fas fa-book-open"></i>
-                    </section>
+                    </div>
+                </section>
 
-                    <canvas id="stats__booksChart"></canvas>
-                </div>
-                
+
             </main>
 
-            <section class="book-features">
-                <div class="book-features__window">
-                    <div class="book-features__option">
-                        <h3>Author:</h3>
-                        <input type="text" placeholder="..." class="book-features__input book-features__author">
-                        <i class="book-features__next fas fa-arrow-right"></i>
-                    </div>
-                    <div class="book-features__option">
-                        <h3>Read:</h3>
-                        <button
-                            class="book-features__button book-features__read book-features__done book-features__next"
-                            id="Read">Yes</button>
-                        <button
-                            class="book-features__button book-features__read book-features__in-progress book-features__next"
-                            id="Still">No</button>
-                        <!-- <i class="book-features__fas fas fa-arrow-down"></i> -->
-                    </div>
-                    <div class="book-features__option">
-                        <h3>Language:</h3>
-                        <button
-                            class="book-features__button book-features__language book-features__polish book-features__next"
-                            id="Polish">Polish</button>
-                        <button
-                            class="book-features__button book-features__language book-features__english book-features__next"
-                            id="English">Engilsh</button>
-                        <button
-                            class="book-features__button book-features__language book-features__spanish book-features__next"
-                            id="Spanish">Spanish</button>
-                        <!-- <i class="book-features__fas fas fa-arrow-down"></i> -->
-                    </div>
-                    <div class="book-features__option">
-                        <h3>Time: [s]</h3>
-                        <input type="text" placeholder="..." class="book-features__input book-features__time">
-                        <i class="book-features__next fas book-features__time fa-arrow-right" id="time"></i>
-                    </div>
-                    <div class="book-features__option">
-                        <h3>Pages:</h3>
-                        <input type="text" placeholder="..." class="book-features__input book-features__pages-amount">
-                        <i class="book-features__next fas book-features__page fa-arrow-right" id="pages"></i>
-                    </div>
 
-                </div>
-            </section>
+            <div class="app-stats">
+                <section class="stats__btn">
+                    <i class="stats__toggle fas fa-chart-bar"></i>
+                    <i class="stats__toggle fas fa-book-open"></i>
+                </section>
+
+                <canvas id="stats__booksChart"></canvas>
+            </div>
 
 
             <!--  -->
@@ -103,6 +105,11 @@
                 </ul>
             </section> -->
 
+
+
+
+<!-- BUDUJE FUNKCJE EDIT -->
+<!-- PRZYKŁADOWA KARTA NA KTOREJ STYLUJE -->
             <!-- <section class="book-card">
                 <div class="book-card__wraper">
                     <ul class="book-card__list">
@@ -113,20 +120,35 @@
                         <li class="book-card__feature">Pages: 140</li>
               
                     </ul>
+
+                    <article class="book-card___change-values">
+                        
+                        Change values:
+                        <form name="changeValues">
+                            <label for="page_value">Page:</label>
+                            <input type="text" id="page_value" name="changePage">
+                            <br>
+                            <label for="hours_value">Hours:</label>
+                            <input type="text" id="hours_value" name="changeHour">
+                            <button type="submit">Change!</button>
+                        </form>
+                    </article>
+
                     <div class="book-card__btn-wraper">
                         <button class="book-card__button book-card__edit"><i class="fas fa-edit"></i></button>
                         <button class="book-card__button book-card__delete"><i class="fas fa-trash"></i></button>
                         <button class="book-card__button book-card__status"><i class="fas fa-check-square"></i></button>
                     </div>
+                    
                 </div>
              
             </section> -->
         </div>
         <section class="book-section">
-                <header class="book-section__title">
-                    <h2>All Books</h2> <i class="fas fa-angle-down"></i>
-                </header>
-                <section class="book-section__row"></section>
+            <header class="book-section__title">
+                <h2>All Books</h2> <i class="fas fa-angle-down"></i>
+            </header>
+            <section class="book-section__row"></section>
         </section>
     </div>
 

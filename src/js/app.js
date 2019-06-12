@@ -104,12 +104,35 @@ class UI {
     }
   }
 
+  // eslint-disable-next-line no-unused-vars
+  static createInput(parent, id, text, className, br) {
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+
+    input.setAttribute('id', id);
+    input.setAttribute('name', id);
+    input.type = 'text';
+
+    label.setAttribute('for', id);
+    label.textContent = text;
+
+    parent.appendChild(label);
+    parent.appendChild(input);
+
+    if (br === true) {
+      parent.appendChild(document.createElement('br'));
+    }
+  }
+
   static createCards(bookData, cardsTitle, bookCardIconClass, sectionTitle) {
     const that = this;
+    // let cart = document.createDocumentFragment();
     let insertBefore = false;
+
     if (document.querySelector('.book-section__row').childNodes.length > 0) {
       insertBefore = true;
     }
+
     (function createWrapCart() {
       if (insertBefore) {
         that.createElement('div',
@@ -125,6 +148,34 @@ class UI {
       that.createElementX('ul',
         document.querySelector('.book-card__wraper'),
         'book-card__list');
+    }());
+    (function createEditorNumberData() {
+      that.createElementX('article',
+        document.querySelector('.book-card__wraper'),
+        'book-card___change-values',
+        'Add values:');
+
+      that.createElementX('form',
+        document.querySelector('.book-card___change-values'),
+        'book-card__form');
+      document.querySelector('.book-card__form').setAttribute('name', 'changeValues');
+
+      that.createInput(document.querySelector('.book-card__form'),
+        'page_value',
+        'Page: +',
+        'book-card__edit-value',
+        true);
+
+      that.createInput(document.querySelector('.book-card__form'),
+        'hours_value',
+        'Hours: +',
+        'book-card__edit-value');
+
+      that.createElementX('button',
+        document.querySelector('.book-card__form'),
+        'book-card__form-button',
+        'Change!');
+      document.querySelector('.book-card__form-button').setAttribute('type', 'submit');
     }());
 
     (function createCartList() {
@@ -193,6 +244,7 @@ class UI {
 // jedyna instancja statystyk
 const story = new HistoryStats();
 
+
 // CHART JS
 const massPopChart = new Chart(booksChart, {
   type: 'bar',
@@ -233,9 +285,12 @@ const addDataToChart = () => {
   massPopChart.update();
 };
 // EVENT FUNCTIONS
+// funkcja
 const downloadingDataToCart = (e) => {
+  // moment do którego panel dodatkowych cech ma się przesówać
   const maxScrollFeatures = (document.querySelectorAll('.book-features__option').length - 1) * (-100);
   const featureWindow = document.querySelector('.book-features__window');
+  // przekazanie danych dot. klikniętego przycisku do obiektu historia
   story.clickStory.push(e.target.classList[2]);
   story.addStatistics(e.target); // add stats
   if (featuresCounter === maxScrollFeatures) {
@@ -261,11 +316,18 @@ const downloadingDataToCart = (e) => {
   featureWindow.style.top = `${featuresCounter}%`;
 };
 
+// FUNKCJA POBIERAJĄCA TUTUŁ KSIĄŻKI
 const start = (e) => {
   e.preventDefault();
+  // pobieram dane z mojego formularza poprzez deklaracje
   const featureBtns = document.querySelectorAll('.book-features__next');
+  // eslint-disable-next-line max-len
+  // Jeśli tytuł ma prawidłową wartość - wysówa aplikacja panel by wprowadzić bardziej szczegółowe informacje dotyczące ksiązki
   if (UI.correctValue(e.target)) {
+    // ów panel się wysówa
     document.querySelector('.book-features').classList.add('book-features--active');
+    // w wysuniętym panelu są buttony, które umożliwiają wpisanie następnej cechy książki
+    // poniższa funkcja umożliwia klikniecie w owe przyciski
     featureBtns.forEach((btn) => {
       btn.addEventListener('click', downloadingDataToCart);
     });
@@ -275,15 +337,15 @@ const start = (e) => {
 // LISTENERS
 form.addEventListener('submit', start);
 
+// aktywuj statystyki
+// document.querySelectorAll('.stats__toggle').forEach((btn) => {
+//   btn.addEventListener('click', () => {
+//     console.log('xlixk');
+//     document.querySelector('.app-stats').classList.toggle('app-stats--active');
+//   });
+// });
 
-document.querySelectorAll('.stats__toggle').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    console.log('xlixk');
-    document.querySelector('.app-stats').classList.toggle('app-stats--active');
-  });
-});
-
-
+// aktywuj pasek z lista ksiazek
 document.querySelector('.fa-angle-down').addEventListener('click', () => {
   console.log('xd');
   document.querySelector('.book-section__row').classList.toggle('book-section__row--active');
@@ -292,4 +354,32 @@ document.querySelector('.fa-angle-down').addEventListener('click', () => {
 
 // console.log(document.querySelector('.book-card__wraper').tagName);
 
-console.log(document.querySelector('.book-section__row').childNodes.length);
+// console.log(document.querySelector('.book-section__row').childNodes.length);
+
+console.log(document.querySelector('.book-section__row'));
+
+// LISTENER
+// document.querySelector('.book-section__row').addEventListener('click', (e) => {
+//   ['Read']
+//   console.log(e.target.textContent.indexOf('Read'));
+
+//   // if (e.target.classList[1] === 'fa-edit') {
+//   //  ONLICK NA ELEMENT KTÓRY POCZATKOWO NIE ISTNIEJE _---BUTTON
+//   // document.querySelector('.fa-edit').onclick = () => {
+//   //   document.querySelector('.book-card___change-values').style.display = 'grid';
+//   // };
+
+//   // // ONLICK NA BUTTON ABY POBRAC FORMULARZ
+//   // document.querySelector('.book-card___change-values > form > button').onclick = (event) => {
+//   //   event.preventDefault();
+//   //   //  POBRANIE DANYCH Z FORMULARZA :)))))
+//   //   console.log(document.forms.changeValues.page_value.value);
+//   //   console.log(document.forms.changeValues.hours_value.value);
+//   //   document.querySelector('.book-card___change-values').style.display = 'none';
+//   // };
+//   // book-card__delete
+//   // document.querySelector('.fa-trash').onclick = () => {
+//   //   document.querySelector('.book-card___change-values').style.display = 'grid';
+//   // };
+//   // }
+// });

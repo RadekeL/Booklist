@@ -2,16 +2,16 @@
     @include flexbox(center,space-around);
     flex-wrap: wrap;
     width: 100%;
-    min-height: 40vh;
-    // background-color: coral;
+    min-height: 30vh;
     
 }
 
 .book-card__wraper{
     @include flexbox(center,space-around);
-    
-    width: 25%;
-    height: 150px;
+    position: relative;
+    // width: 25%;
+    width: 250px;
+    height: 70%;
     padding: 5px;
     border-radius: 15%;
     margin: 10px;
@@ -19,6 +19,10 @@
     background-color: skyblue;
 
     font-size: 1.5rem;
+
+    // background-color: rgba(100, 9, 11, 0.1);
+    // filter: opacity(0.2);
+    // filter: blur(0.2)
     
 }
 
@@ -28,6 +32,10 @@
     width: 60%;
     height: 100%;
     flex-direction: column;
+    // BUDUJE FUNKCJE EDIT
+    // ZMIANA FUNKCJA EDIT
+    // filter: opacity(0.2);
+
 }
 
 .book-card__title{
@@ -57,6 +65,9 @@
     // border-radius: 10%;
     color: black;
     transition: .7s;
+    // BUDUJE FUNKCJE EDIT
+    // INDEX
+    // z-index: 10;
     &:hover{
         color: rgb(248, 241, 227);
     }

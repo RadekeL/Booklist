@@ -1,18 +1,43 @@
-.app{
-    // @include flexbox(center,center);
-    display: flex;
+// BUDUJE FUNKCJE EDIT
+.book-card___change-values{
+    display: none;
+    position: absolute;
+    // display: grid;
+    height: 90%;
+
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 20%;
+    padding-left: 10%;
+
+    background-color: #FFEBCD;
+    filter: opacity(0.9);
+}
+
+#page_value, #hours_value{
+    background-color: inherit;
+    border: none;
+    margin-bottom: 3px;
+    border-bottom: 1px solid black;
+}
+
+// label{
+//     width: 30%;
+// }
+#page_value{
+    width: 30%;
+    // flex-basis: 50%;
+    // grid-area: 
+}
+#hours_value{
+    width: 30%;
+}
+.book-card___change-values > form{
+    // display:flex;
     // flex-direction: column;
-    // justify-self: flex-start;
-    width: 100%;
-    // background-color: yellow;
+    // flex-wrap: nowrap;
+    // display: grid;
+    // grid-template-columns: 1fr 1fr;
+    // grid-template-rows: 1fr;
+    // grid
 }
-
-.app__panel{
-        @include flexbox(center,center);
-    width: 100%;
-    flex-direction: column;
-    // background-color: blueviolet;
-    // margin: 0 auto;
-}
-
-

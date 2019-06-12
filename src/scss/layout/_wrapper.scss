@@ -9,11 +9,10 @@
 }
 .page-container{
     @include flexbox(center,space-around);
-    flex-direction: column;
     width: 95%;
     height: 40%;
     // margin: 0 auto;
 
-   background-color: salmon;
+//    background-color: salmon;
 }
 

@@ -1,10 +1,11 @@
 .app-stats{
     display: flex;
     width: 0%;
+    height: 100%;
     padding-top: 10px;
     transition: .5s;
     z-index: 400;
-    background-color: sandybrown;
+    // background-color: sandybrown;
     &:hover{
         right: 3%;
     }
@@ -17,12 +18,13 @@
     display: flex;
     flex-direction: column;
     width: 10%;
+    margin-right: 5%;
 }
 
 .stats__toggle{
     border-left: black 5px solid;   
     padding: 10px;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: black;
     transition: .4s;
     cursor: pointer;
