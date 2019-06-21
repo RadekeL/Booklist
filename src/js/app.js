@@ -1,10 +1,13 @@
+/* eslint-disable max-len */
 
 import '../scss/main.scss';
 import Chart from 'chart.js';
 
-const form = document.querySelector('.app__form');
+
+const form1 = document.querySelector('.app__form');
 // eslint-disable-next-line prefer-const
 let booksChart = document.querySelector('#stats__booksChart').getContext('2d');
+const speedOfReadingChart = document.querySelector('#stats__speed').getContext('2d');
 let featuresCounter = 0;
 
 class Book {
@@ -82,15 +85,16 @@ class HistoryStats {
 }
 
 class UI {
-  static createElement(el, insertBefore, className) {
+  static createBefore(el, insertBefore, className) {
     const element = document.createElement(el);
     insertBefore.before(element);
     element.classList.add(className);
   }
+  //  put && set property of elements
 
-  static createElementX(el, parent, className, text, titles) { // dodana nowa wlascwosc arg
-    const element = document.createElement(el);
-    parent.appendChild(element);
+  static createNewElement(el, parent, className, text, titles) { // dodana nowa wlascwosc arg
+    const element = el;
+    parent.appendChild(el);
     if (Array.isArray(className)) { // sprawdz czy jest tablica a nie objektem!!!
       for (let i = 0; i < className.length; i += 1) {
         element.classList.add(className[i]);
@@ -100,7 +104,7 @@ class UI {
     }
 
     if (text !== undefined) {
-      element.innerHTML = `${titles} ${text}`;
+      element.textContent = `${titles} ${text}`;
     }
   }
 
@@ -124,65 +128,64 @@ class UI {
     }
   }
 
-  static createCards(bookData, cardsTitle, bookCardIconClass, sectionTitle) {
+  // ADD STATUS CART
+  static createCards(cartState, bookData, cardsTitle, bookCardIconClass, sectionTitle) {
     const that = this;
-    // let cart = document.createDocumentFragment();
+    // the cart should be insert before last cart
     let insertBefore = false;
+    // Elements which i want to CREATE:
+    // - Fragment
+    const cart = document.createDocumentFragment();
+    const divek = document.createElement('div');
+    const list = document.createElement('ul');
+    const article = document.createElement('article');
+    const form = document.createElement('form');
+    const button = document.createElement('button');
+    const btnWraper = document.createElement('div');
+    // DOM Elements
+    const cartContainer = document.querySelector('.book-section__row');
 
-    if (document.querySelector('.book-section__row').childNodes.length > 0) {
+    // Add Class list
+    divek.classList.add('book-card__wraper');
+
+    // Where the cart should be insert
+    if (cartContainer.childNodes.length > 0) {
       insertBefore = true;
     }
 
     (function createWrapCart() {
-      if (insertBefore) {
-        that.createElement('div',
-          document.querySelector('.book-card__wraper'),
-          'book-card__wraper');
-      } else {
-        that.createElementX('div',
-          document.querySelector('.book-section__row'),
-          'book-card__wraper');
-      }
-
-
-      that.createElementX('ul',
-        document.querySelector('.book-card__wraper'),
-        'book-card__list');
+      that.createNewElement(list, divek, 'book-card__list');
     }());
+
     (function createEditorNumberData() {
-      that.createElementX('article',
-        document.querySelector('.book-card__wraper'),
-        'book-card___change-values',
-        'Add values:');
+      that.createNewElement(article, divek, 'book-card___change-values', 'Add values:');
 
-      that.createElementX('form',
-        document.querySelector('.book-card___change-values'),
-        'book-card__form');
-      document.querySelector('.book-card__form').setAttribute('name', 'changeValues');
+      that.createNewElement(form, article, 'book-card__form');
+      form.setAttribute('name', 'changeValues');
 
-      that.createInput(document.querySelector('.book-card__form'),
+      that.createInput(form,
         'page_value',
         'Page: +',
         'book-card__edit-value',
         true);
 
-      that.createInput(document.querySelector('.book-card__form'),
+      that.createInput(form,
         'hours_value',
         'Hours: +',
         'book-card__edit-value');
 
-      that.createElementX('button',
-        document.querySelector('.book-card__form'),
-        'book-card__form-button',
-        'Change!');
-      document.querySelector('.book-card__form-button').setAttribute('type', 'submit');
+      that.createNewElement(button, form, 'book-card__form-button', 'Change!');
+      button.setAttribute('type', 'submit');
     }());
 
     (function createCartList() {
       const maxFeature = 6;
       for (let i = 0; i < maxFeature; i += 1) {
-        that.createElementX('li',
-          document.querySelector('.book-card__list'),
+        const liEl = document.createElement('li');
+
+        // list.appendChild(liEl);
+        that.createNewElement(liEl,
+          list,
           (`${i === 0 ? cardsTitle[0] : cardsTitle[1]}`),
           bookData[i],
           i > 0 ? sectionTitle[i - 1] : '');
@@ -190,18 +193,36 @@ class UI {
     }());
 
     (function createBtnCartSection() {
-      that.createElementX('div',
-        document.querySelector('.book-card__wraper'),
-        'book-card__btn-wraper');
+      // divek.appendChild(btnWraper);
+      that.createNewElement(btnWraper, divek, 'book-card__btn-wraper');
+      // CREATE 2 MORE BTNS, WHICH ALLOWS EDIT CART PARAMTRS, IF A BOOK HASN'T BEEN READ
+      if (cartState === 'book-features__in-progress') {
+        for (let i = 0; i < bookCardIconClass.length; i += 1) {
+          const icon = document.createElement('i');
+          const changeCartState = document.createElement('button');
 
-      for (let i = 0; i < bookCardIconClass.length; i += 1) {
-        that.createElementX('button',
-          document.querySelector('.book-card__btn-wraper'),
-          'book-card__button');
+          that.createNewElement(changeCartState, btnWraper, 'book-card__button');
+          that.createNewElement(icon, changeCartState, ['fas', `${bookCardIconClass[i]}`]);
+        }
+        // CREATE ONLY ONE BTN TO DELETE BOOK CART, IF A BOOK HAS BEEN READ
+      } else if (cartState === 'book-features__done') {
+        const icon = document.createElement('i');
+        const changeCartState = document.createElement('button');
 
-        that.createElementX('i',
-          document.querySelectorAll('.book-card__button')[i],
-          ['fas', `${bookCardIconClass[i]}`]);
+        that.createNewElement(changeCartState, btnWraper, 'book-card__button');
+        that.createNewElement(icon, changeCartState, ['fas', `${bookCardIconClass[1]}`]);
+      }
+
+      // JEŚLI STATUS JEST READ
+    }());
+
+    (function appendToDOM() {
+      cart.appendChild(divek);
+      // insert fragment to right place
+      if (insertBefore) {
+        document.querySelector('.book-card__wraper').before(cart);
+      } else {
+        cartContainer.appendChild(cart);
       }
     }());
   }
@@ -209,6 +230,12 @@ class UI {
 
   static correctValue(input) { // moze usprawnij
     let posiitive = false;
+    console.log('1');
+    console.log(input.classList[0]);
+    console.log('2');
+    console.log(input.tagName);
+    console.log('3');
+    console.log(input.previousElementSibling.value);
     if (input.classList[0] === 'book-features__button' || input.tagName === 'FORM') {
       posiitive = true;
     } else {
@@ -220,6 +247,15 @@ class UI {
         }
       }
     }
+
+    // if (type === 'number'){
+    //   if(!isNaN(input)) {
+    //   } else if (type === 'text'){
+    //     if(isNaN(input)){
+
+    //     }
+    //   }
+    // }
     return posiitive;
   }
 
@@ -253,24 +289,37 @@ const massPopChart = new Chart(booksChart, {
       `${story.stats.stillRead.name}`,
       `${story.stats.english.name}`,
       `${story.stats.polish.name}`,
-      `${story.stats.spanish.name}`,
-      `${story.stats.readingTime.name}`,
-      `${story.stats.numberPages.name}`],
+      `${story.stats.spanish.name}`],
     datasets: [{
       label: 'Liczba',
       data: [story.stats.read.value,
         story.stats.stillRead.value,
         story.stats.english.value,
         story.stats.polish.value,
-        story.stats.spanish.value,
-        story.stats.readingTime.value,
+        story.stats.spanish.value],
+      backgroundColor: 'cadetblue',
+    }],
+  },
+  options: {
+    responsive: 'true',
+    maintainAspectRatio: 'true',
+  },
+});
+const speedMeasureChart = new Chart(speedOfReadingChart, {
+  type: 'bar',
+  data: {
+    labels: [`${story.stats.readingTime.name}`,
+      `${story.stats.numberPages.name}`],
+    datasets: [{
+      label: 'Liczba',
+      data: [story.stats.readingTime.value,
         story.stats.numberPages.value],
       backgroundColor: 'cadetblue',
     }],
   },
   options: {
     responsive: 'true',
-    maintainAspectRatio: 'false',
+    maintainAspectRatio: 'true',
   },
 });
 
@@ -279,11 +328,16 @@ const addDataToChart = () => {
     story.stats.stillRead.value,
     story.stats.english.value,
     story.stats.polish.value,
-    story.stats.spanish.value,
-    story.stats.readingTime.value,
-    story.stats.numberPages.value];
+    story.stats.spanish.value];
   massPopChart.update();
 };
+
+const addDataToSpeedChart = () => {
+  speedMeasureChart.data.datasets[0].data = [story.stats.readingTime.value,
+    story.stats.numberPages.value];
+  speedMeasureChart.update();
+};
+
 // EVENT FUNCTIONS
 // funkcja
 const downloadingDataToCart = (e) => {
@@ -296,6 +350,7 @@ const downloadingDataToCart = (e) => {
   if (featuresCounter === maxScrollFeatures) {
     featuresCounter = 0;
     UI.hidefeaturePanel();
+    console.log(story.clickStory[1]);
     const x = UI.newBookInstance(
       document.querySelector('.app-panel__book-name'),
       document.querySelector('.book-features__author'),
@@ -304,10 +359,12 @@ const downloadingDataToCart = (e) => {
       document.querySelector('.book-features__time'),
       document.querySelector('.book-features__pages-amount'),
     );
-    UI.createCards(x.bookData, x.cardsTitle, x.bookCardIconClass, x.sectionTitles);
+    UI.createCards(story.clickStory[1], x.bookData, x.cardsTitle,
+      x.bookCardIconClass, x.sectionTitles);
     UI.clearInput();
     story.clickStory.splice(0, story.clickStory.length);
     addDataToChart();
+    addDataToSpeedChart();
   } else if (featuresCounter !== maxScrollFeatures) {
     if (UI.correctValue(e.target)) {
       featuresCounter -= 100;
@@ -335,15 +392,20 @@ const start = (e) => {
 };
 
 // LISTENERS
-form.addEventListener('submit', start);
+form1.addEventListener('submit', start);
 
 // aktywuj statystyki
-// document.querySelectorAll('.stats__toggle').forEach((btn) => {
-//   btn.addEventListener('click', () => {
-//     console.log('xlixk');
-//     document.querySelector('.app-stats').classList.toggle('app-stats--active');
-//   });
-// });
+document.querySelector('.fa-chart-bar').addEventListener('click', () => {
+  console.log('statts');
+  document.querySelector('.stats-cont').classList.toggle('stats-cont--active');
+  document.querySelector('.app-stats').classList.toggle('app-stats--active');
+});
+
+document.querySelector('.fa-book-open').addEventListener('click', () => {
+  console.log('speed Stats');
+  document.querySelector('.stats-speed').classList.toggle('stats-speed--active');
+  document.querySelector('.app-stats').classList.toggle('app-stats--active');
+});
 
 // aktywuj pasek z lista ksiazek
 document.querySelector('.fa-angle-down').addEventListener('click', () => {
@@ -351,35 +413,96 @@ document.querySelector('.fa-angle-down').addEventListener('click', () => {
   document.querySelector('.book-section__row').classList.toggle('book-section__row--active');
 });
 
+// ZROB TAK ABY DZIALANIA TYCH EVENTOW ODZIALYWALYBY NA WYKRES I NA OBIEKT STORYYY
+const startEdit = (event) => {
+  console.log('klik w przycisk edit');
+  event.stopPropagation();
+  document.querySelector('.book-card___change-values').style.display = 'grid';
+};
 
-// console.log(document.querySelector('.book-card__wraper').tagName);
+const editCart = (event) => {
+  event.stopImmediatePropagation();
+  event.preventDefault();
+  console.log('klik w panel edytora');
+  story.stats.numberPages.value += parseInt(document.forms.changeValues.page_value.value, 10);
+  story.stats.readingTime.value += parseInt(document.forms.changeValues.hours_value.value, 10);
 
-// console.log(document.querySelector('.book-section__row').childNodes.length);
+  document.querySelector('.book-card___change-values').style.display = 'none';
+  addDataToChart();
+  addDataToSpeedChart();
+};
 
-console.log(document.querySelector('.book-section__row'));
+const changeReadStatus = (event) => {
+  const aim = event.target;
+  event.stopPropagation();
+  // Change read status
+  aim.parentElement.parentElement.parentElement.firstElementChild.children[2].textContent = 'Status: Read';
+  // change stats
+  story.stats.stillRead.value -= 1;
+  story.stats.read.value += 1;
+  console.log('klik w checkera');
+  // DELETE UNUSEFUL CART BUTTONS WHEN BOOK WILL BE READ
+  event.target.parentElement.parentElement.children[0].parentNode
+    .removeChild(event.target.parentElement.parentElement.children[0]);
+  event.target.parentNode.removeChild(event.target);
+  addDataToChart();
+  addDataToSpeedChart();
+};
+
+const deleteStats = (cartData, target) => {
+  //  NIE TRZEBA DWOCH PARAMETROW WSZYSTKO MOZNA Z JEDNEGO !!!!
+  const findReadingTime = target.parentElement.parentElement.parentElement.children[0].children[4].textContent.indexOf(':');
+  const findNumberPages = target.parentElement.parentElement.parentElement.children[0].children[5].textContent.indexOf(':');
+  const keys = Object.keys(story.stats);
+  console.log(keys);
+
+  if (cartData[2].textContent === 'Status: Still') {
+    story.stats.stillRead.value -= 1;
+  } else if (cartData[2].textContent === 'Status: Read') {
+    story.stats.read.value -= 1;
+  }
+  if (cartData[3].textContent === 'Language: English') {
+    story.stats.english.value -= 1;
+  } else if (cartData[3].textContent === 'Language: Polish') {
+    story.stats.polish.value -= 1;
+  } else if (cartData[3].textContent === 'Language: Spanish') {
+    story.stats.spanish.value -= 1;
+  }
+  story.stats.readingTime.value -= parseInt(cartData[4].textContent.slice(findReadingTime + 2), 10);
+  story.stats.numberPages.value -= parseInt(cartData[5].textContent.slice(findNumberPages + 2), 10);
+};
+const deleteBook = (event) => {
+  const cart = event.target.parentElement.parentElement.parentElement;
+  const cartList = event.target.parentElement.parentElement.parentElement.childNodes[0].childNodes;
+  event.stopPropagation();
+  deleteStats(cartList, event.target);
+  cart.parentNode.removeChild(cart);
+  addDataToChart();
+  addDataToSpeedChart();
+};
 
 // LISTENER
-// document.querySelector('.book-section__row').addEventListener('click', (e) => {
-//   ['Read']
-//   console.log(e.target.textContent.indexOf('Read'));
+document.querySelector('.book-section__row').addEventListener('click', (e) => {
+  // BUTTONS INSIDE SECTION
+  const sign = document.querySelectorAll('.book-card___change-values > form > button');
+  const editBtn = document.querySelectorAll('.fa-edit');
+  const changeStatus = document.querySelectorAll('.fa-check-square');
+  const deleteCart = document.querySelectorAll('.fa-trash');
+  console.log(e.target);
+  // LISTENERS
+  changeStatus.forEach((changeBtn) => {
+    changeBtn.addEventListener('click', changeReadStatus);
+  });
 
-//   // if (e.target.classList[1] === 'fa-edit') {
-//   //  ONLICK NA ELEMENT KTÓRY POCZATKOWO NIE ISTNIEJE _---BUTTON
-//   // document.querySelector('.fa-edit').onclick = () => {
-//   //   document.querySelector('.book-card___change-values').style.display = 'grid';
-//   // };
+  sign.forEach((signBtn) => {
+    signBtn.addEventListener('click', editCart);
+  });
 
-//   // // ONLICK NA BUTTON ABY POBRAC FORMULARZ
-//   // document.querySelector('.book-card___change-values > form > button').onclick = (event) => {
-//   //   event.preventDefault();
-//   //   //  POBRANIE DANYCH Z FORMULARZA :)))))
-//   //   console.log(document.forms.changeValues.page_value.value);
-//   //   console.log(document.forms.changeValues.hours_value.value);
-//   //   document.querySelector('.book-card___change-values').style.display = 'none';
-//   // };
-//   // book-card__delete
-//   // document.querySelector('.fa-trash').onclick = () => {
-//   //   document.querySelector('.book-card___change-values').style.display = 'grid';
-//   // };
-//   // }
-// });
+  editBtn.forEach((editCartBtn) => {
+    editCartBtn.addEventListener('click', startEdit);
+  });
+
+  deleteCart.forEach((deleteBtn) => {
+    deleteBtn.addEventListener('click', deleteBook);
+  });
+});

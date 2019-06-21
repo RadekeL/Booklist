@@ -84,8 +84,12 @@
                     <i class="stats__toggle fas fa-chart-bar"></i>
                     <i class="stats__toggle fas fa-book-open"></i>
                 </section>
-
-                <canvas id="stats__booksChart"></canvas>
+                <div class="stats-cont">
+                    <canvas id="stats__booksChart"></canvas>
+                </div>
+                <div class="stats-speed">
+                    <canvas id="stats__speed"></canvas>
+                </div>
             </div>
 
 
@@ -108,8 +112,8 @@
 
 
 
-<!-- BUDUJE FUNKCJE EDIT -->
-<!-- PRZYKŁADOWA KARTA NA KTOREJ STYLUJE -->
+            <!-- BUDUJE FUNKCJE EDIT -->
+            <!-- PRZYKŁADOWA KARTA NA KTOREJ STYLUJE -->
             <!-- <section class="book-card">
                 <div class="book-card__wraper">
                     <ul class="book-card__list">
@@ -148,7 +152,30 @@
             <header class="book-section__title">
                 <h2>All Books</h2> <i class="fas fa-angle-down"></i>
             </header>
-            <section class="book-section__row"></section>
+            <section class="book-section__row">
+                <!-- KARTA -->
+                <div class="book-card__wraper">
+                    <ul class="book-card__list">
+                        <li class="book-card__title"> sdsd</li>
+                        <li class="book-card__feature">Author: ds</li>
+                        <li class="book-card__feature">Status: Still</li>
+                        <li class="book-card__feature">Language: English</li>
+                        <li class="book-card__feature">Hours: 2</li>
+                        <li class="book-card__feature">Pages: 11</li>
+                    </ul>
+                    <!-- <article class="book-card___change-values" style="display: grid;">undefined Add values:<form
+                            class="book-card__form" name="changeValues"><label for="page_value">Page: +</label><input
+                                id="page_value" name="page_value" type="text"><br><label for="hours_value">Hours:
+                                +</label><input id="hours_value" name="hours_value" type="text"><button
+                                class="book-card__form-button" type="submit">undefined Change!</button></form>
+                    </article> -->
+                    <div class="book-card__btn-wraper"><button class="book-card__button"><i
+                                class="fas fa-edit"></i></button><button class="book-card__button"><i
+                                class="fas fa-trash"></i></button><button class="book-card__button"><i
+                                class="fas fa-check-square"></i></button></div>
+                </div>
+                <!-- KONIEC KARTY -->
+            </section>
         </section>
     </div>
 
