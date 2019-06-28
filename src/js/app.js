@@ -52,16 +52,15 @@ class HistoryStats {
         value: 0,
       },
     };
-    this.clickStory = [];
   }
 
-
-  addStatistics(el) {
-    switch (el.getAttribute('id')) {
-      case 'Read':
+  // POPRAW METODE ABY SIE DODAWOALO
+  addReadingInfoToStory(bookData) {
+    switch (bookData.value) {
+      case 'done':
         this.stats.read.value += 1;
         break;
-      case 'Still':
+      case 'still':
         this.stats.stillRead.value += 1;
         break;
       case 'Polish':
@@ -73,16 +72,137 @@ class HistoryStats {
       case 'Spanish':
         this.stats.spanish.value += 1;
         break;
-      case 'time':
-        this.stats.readingTime.value += Number(el.previousElementSibling.value);
-        break;
-      case 'pages':
-        this.stats.numberPages.value += Number(el.previousElementSibling.value);
-        break;
       default:
     }
   }
+
+  addNumberStatsToStory(currentObject) {
+    this.stats.readingTime.value += currentObject[4];
+    this.stats.numberPages.value += currentObject[5];
+  }
+
+  // MOÆE PODZIAØA JAKA§ ITERACJA
+  setStats(object) {
+    this.stats.read.value += object[0].read.value;
+    this.stats.stillRead.value += object[0].stillRead.value;
+    this.stats.polish.value += object[0].polish.value;
+    this.stats.english.value += object[0].english.value;
+    this.stats.spanish.value += object[0].spanish.value;
+    this.stats.readingTime.value += object[0].readingTime.value;
+    this.stats.numberPages.value += object[0].numberPages.value;
+  }
 }
+
+// /
+// LOCAL STORAGE
+// /
+class Store {
+  // POŁACZ 2 PONIZSZE METODY
+  static getBooks() {
+    let books;
+    if (localStorage.getItem('books') === null) {
+      books = [];
+    } else {
+      books = JSON.parse(localStorage.getItem('books'));
+    }
+
+    return books;
+  }
+
+  static getStats() {
+    let stats;
+    if (localStorage.getItem('stats') === null) {
+      stats = [];
+    } else {
+      stats = JSON.parse(localStorage.getItem('stats'));
+    }
+    return stats;
+  }
+
+  static addStats(addStats) {
+    const stats = Store.getStats();
+    stats.splice(0);
+    stats.push(addStats);
+    localStorage.setItem('stats', JSON.stringify(stats));
+  }
+
+  static addBooks(book) {
+    const books = Store.getBooks();
+    books.push(book);
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+
+  static removeBooks(title) {
+    const books = Store.getBooks();
+    books.forEach((book, index) => {
+      if (book.bookData[0].trim() === title.trim()) {
+        books.splice(index, 1);
+      }
+    });
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+}
+
+// jedyna instancja statystyk
+const story = new HistoryStats();
+
+
+// CHART JS
+const massPopChart = new Chart(booksChart, {
+  type: 'bar',
+  data: {
+    labels: [`${story.stats.read.name}`,
+      `${story.stats.stillRead.name}`,
+      `${story.stats.english.name}`,
+      `${story.stats.polish.name}`,
+      `${story.stats.spanish.name}`],
+    datasets: [{
+      label: 'Liczba',
+      data: [story.stats.read.value,
+        story.stats.stillRead.value,
+        story.stats.english.value,
+        story.stats.polish.value,
+        story.stats.spanish.value],
+      backgroundColor: 'cadetblue',
+    }],
+  },
+  options: {
+    responsive: 'true',
+    maintainAspectRatio: 'true',
+  },
+});
+const speedMeasureChart = new Chart(speedOfReadingChart, {
+  type: 'bar',
+  data: {
+    labels: [`${story.stats.readingTime.name}`,
+      `${story.stats.numberPages.name}`],
+    datasets: [{
+      label: 'Liczba',
+      data: [story.stats.readingTime.value,
+        story.stats.numberPages.value],
+      backgroundColor: 'cadetblue',
+    }],
+  },
+  options: {
+    responsive: 'true',
+    maintainAspectRatio: 'true',
+  },
+});
+
+const addDataToChart = () => {
+  massPopChart.data.datasets[0].data = [story.stats.read.value,
+    story.stats.stillRead.value,
+    story.stats.english.value,
+    story.stats.polish.value,
+    story.stats.spanish.value];
+  massPopChart.update();
+};
+
+const addDataToSpeedChart = () => {
+  speedMeasureChart.data.datasets[0].data = [story.stats.readingTime.value,
+    story.stats.numberPages.value];
+  speedMeasureChart.update();
+};
 
 class UI {
   static createBefore(el, insertBefore, className) {
@@ -196,7 +316,7 @@ class UI {
       // divek.appendChild(btnWraper);
       that.createNewElement(btnWraper, divek, 'book-card__btn-wraper');
       // CREATE 2 MORE BTNS, WHICH ALLOWS EDIT CART PARAMTRS, IF A BOOK HASN'T BEEN READ
-      if (cartState === 'book-features__in-progress') {
+      if (cartState === 'still') {
         for (let i = 0; i < bookCardIconClass.length; i += 1) {
           const icon = document.createElement('i');
           const changeCartState = document.createElement('button');
@@ -205,7 +325,7 @@ class UI {
           that.createNewElement(icon, changeCartState, ['fas', `${bookCardIconClass[i]}`]);
         }
         // CREATE ONLY ONE BTN TO DELETE BOOK CART, IF A BOOK HAS BEEN READ
-      } else if (cartState === 'book-features__done') {
+      } else if (cartState === 'done') {
         const icon = document.createElement('i');
         const changeCartState = document.createElement('button');
 
@@ -227,35 +347,67 @@ class UI {
     }());
   }
 
-
-  static correctValue(input) { // moze usprawnij
-    let posiitive = false;
-    console.log('1');
-    console.log(input.classList[0]);
-    console.log('2');
-    console.log(input.tagName);
-    console.log('3');
-    console.log(input.previousElementSibling.value);
-    if (input.classList[0] === 'book-features__button' || input.tagName === 'FORM') {
-      posiitive = true;
-    } else {
-      for (let i = 0; i < input.previousElementSibling.value.length; i += 1) {
-        if (input.previousElementSibling.value[i] === ' ' || input.previousElementSibling.value[i] === '') {
-          posiitive = false;
-        } else {
-          posiitive = true;
-        }
-      }
+  static displayBooks() {
+    const books = Store.getBooks();
+    const stats = Store.getStats();
+    books.forEach((book) => {
+      UI.createCards(book.bookData[2], book.bookData,
+        book.cardsTitle, book.bookCardIconClass,
+        book.sectionTitles);
+    });
+    if (stats.length !== 0) {
+      story.setStats(stats);
+      addDataToChart();
+      addDataToSpeedChart();
     }
+    document.querySelector('.book-section__title > h2 > span').textContent = `(${story.stats.read.value + story.stats.stillRead.value})`;
+  }
 
-    // if (type === 'number'){
-    //   if(!isNaN(input)) {
-    //   } else if (type === 'text'){
-    //     if(isNaN(input)){
+  static isEmptyArea(value) {
+    if (value === '') return false;
+    return true;
+  }
 
-    //     }
-    //   }
-    // }
+  static isLetters(field) {
+    if (/^[a-zA-Z ]+$/.test(field.value)) return true;
+    return false;
+  }
+
+  static isCheckRadio(radioElements) {
+    if (UI.getRatioValue(radioElements)) return true;
+    return false;
+  }
+
+  static isNumber(field) {
+    if (/^[0-9]+$/.test(field.value)) return true;
+    return false;
+  }
+
+  static inputNumberValidation(input) {
+    if (UI.isEmptyArea(input.value.trim()) && UI.isNumber(input)) return true;
+    return false;
+  }
+
+  static inputRadioValidation(input) {
+    if (UI.isCheckRadio(input.parentElement.querySelectorAll('input[name="readData"]'))) return true;
+    return false;
+  }
+
+  static inputTextValidation(input) {
+    if (UI.isEmptyArea(input.value.trim()) && UI.isLetters(input)) return true;
+    return false;
+  }
+
+  static formValidation(input) { // moze usprawnij
+    let posiitive = false;
+
+    if (input.parentElement.classList[1] === 'book-features__number') {
+      posiitive = UI.inputNumberValidation(input);
+    } else if (input.parentElement.classList[1] === 'book-features__radio') {
+      posiitive = UI.inputRadioValidation(input);
+    } else {
+      posiitive = UI.inputTextValidation(input);
+    }
     return posiitive;
   }
 
@@ -272,102 +424,78 @@ class UI {
     }, 1000);
   }
 
-  static newBookInstance(title, author, status, language, time, pages) {
-    return new Book(title.value, author.value, status.getAttribute('id'), language.getAttribute('id'), Number(time.value), Number(pages.value));
+  static getSelectValue(selectElement) {
+    return selectElement.options[selectElement.selectedIndex];
+  }
+
+  static getRatioValue(ratioElement) {
+    let selectedValue = null;
+    for (let i = 0; i < ratioElement.length; i += 1) {
+      if (ratioElement[i].checked) {
+        selectedValue = ratioElement[i];
+      }
+    }
+    return selectedValue;
+  }
+
+  static newBook(statsObject, title, author, status, language, time, pages) {
+    const bookDataArr = [title, author, status, language, Number(time.value), Number(pages.value)];
+    for (let i = 2; i < bookDataArr.length - 2; i += 1) {
+      statsObject.addReadingInfoToStory(bookDataArr[i]);
+    }
+    statsObject.addNumberStatsToStory(bookDataArr);
+    // Store.addStats(statsObject);
+    // Add Stats to LS
+    Store.addStats(statsObject.stats);
+    return new Book(title.value, author.value, status.value, language.value, time.value, pages.value);
   }
 }
 
-// jedyna instancja statystyk
-const story = new HistoryStats();
-
-
-// CHART JS
-const massPopChart = new Chart(booksChart, {
-  type: 'bar',
-  data: {
-    labels: [`${story.stats.read.name}`,
-      `${story.stats.stillRead.name}`,
-      `${story.stats.english.name}`,
-      `${story.stats.polish.name}`,
-      `${story.stats.spanish.name}`],
-    datasets: [{
-      label: 'Liczba',
-      data: [story.stats.read.value,
-        story.stats.stillRead.value,
-        story.stats.english.value,
-        story.stats.polish.value,
-        story.stats.spanish.value],
-      backgroundColor: 'cadetblue',
-    }],
-  },
-  options: {
-    responsive: 'true',
-    maintainAspectRatio: 'true',
-  },
-});
-const speedMeasureChart = new Chart(speedOfReadingChart, {
-  type: 'bar',
-  data: {
-    labels: [`${story.stats.readingTime.name}`,
-      `${story.stats.numberPages.name}`],
-    datasets: [{
-      label: 'Liczba',
-      data: [story.stats.readingTime.value,
-        story.stats.numberPages.value],
-      backgroundColor: 'cadetblue',
-    }],
-  },
-  options: {
-    responsive: 'true',
-    maintainAspectRatio: 'true',
-  },
-});
-
-const addDataToChart = () => {
-  massPopChart.data.datasets[0].data = [story.stats.read.value,
-    story.stats.stillRead.value,
-    story.stats.english.value,
-    story.stats.polish.value,
-    story.stats.spanish.value];
-  massPopChart.update();
-};
-
-const addDataToSpeedChart = () => {
-  speedMeasureChart.data.datasets[0].data = [story.stats.readingTime.value,
-    story.stats.numberPages.value];
-  speedMeasureChart.update();
-};
-
 // EVENT FUNCTIONS
 // funkcja
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// CAŁY SĘK POLEGA NA TYM ZE PROGRAM NEI JEST PRZYSTOSOWANY DO NOWEGO TYPU FORMULARZA
+//  INPUT RATIO/ SECTION itp
 const downloadingDataToCart = (e) => {
   // moment do którego panel dodatkowych cech ma się przesówać
+  e.preventDefault();
+  // console.log('RAZEM KART:');
+  // console.log(story.stats.read.value + story.stats.stillRead.value);
+  const counter = featuresCounter === 0 ? featuresCounter : -featuresCounter / 100;
+  // UI.currentFormType(e.target.children[counter]);
   const maxScrollFeatures = (document.querySelectorAll('.book-features__option').length - 1) * (-100);
   const featureWindow = document.querySelector('.book-features__window');
   // przekazanie danych dot. klikniętego przycisku do obiektu historia
-  story.clickStory.push(e.target.classList[2]);
-  story.addStatistics(e.target); // add stats
+  // story.addStatistics(e.target); // add stats // NAD SENSEM ISTNIENIA TEGO TEZ TRZEBA SIE ZASTANOWIĆ
   if (featuresCounter === maxScrollFeatures) {
+    // UI.getRatioValue(document.querySelectorAll('input[name="readData"]'));
+    // UI.getSelectValue(document.querySelector('select[name="language"]'));
     featuresCounter = 0;
     UI.hidefeaturePanel();
-    console.log(story.clickStory[1]);
-    const x = UI.newBookInstance(
+    const x = UI.newBook(
+      story,
       document.querySelector('.app-panel__book-name'),
       document.querySelector('.book-features__author'),
-      document.querySelector(`.${story.clickStory[1]}`),
-      document.querySelector(`.${story.clickStory[2]}`),
+      UI.getRatioValue(document.querySelectorAll('input[name="readData"]')),
+      UI.getSelectValue(document.querySelector('select[name="language"]')),
       document.querySelector('.book-features__time'),
       document.querySelector('.book-features__pages-amount'),
     );
-    UI.createCards(story.clickStory[1], x.bookData, x.cardsTitle,
+    // PIERWSZY ARGUMENT MOZE BYC LEPIEJ CIAGNIETY, WYKORZYSTAJ METODE PODOBNA DO LS
+    UI.createCards(UI.getRatioValue(document.querySelectorAll('input[name="readData"]')).value, x.bookData, x.cardsTitle,
       x.bookCardIconClass, x.sectionTitles);
+    // Add to storage
+    Store.addBooks(x);
+    // console.log(Store.getBooks()[0].bookData[2]);
+    document.querySelector('.book-section__title > h2 > span').textContent = `(${story.stats.read.value + story.stats.stillRead.value})`;
     UI.clearInput();
-    story.clickStory.splice(0, story.clickStory.length);
     addDataToChart();
     addDataToSpeedChart();
   } else if (featuresCounter !== maxScrollFeatures) {
-    if (UI.correctValue(e.target)) {
-      featuresCounter -= 100;
+    if (UI.formValidation(e.target.children[counter].children[1])) {
+      if (e.target) {
+        featuresCounter -= 100;
+      }
     }
   }
   featureWindow.style.top = `${featuresCounter}%`;
@@ -377,20 +505,24 @@ const downloadingDataToCart = (e) => {
 const start = (e) => {
   e.preventDefault();
   // pobieram dane z mojego formularza poprzez deklaracje
-  const featureBtns = document.querySelectorAll('.book-features__next');
+  const featureBtns = document.querySelector('.book-features__FORM');
   // eslint-disable-next-line max-len
   // Jeśli tytuł ma prawidłową wartość - wysówa aplikacja panel by wprowadzić bardziej szczegółowe informacje dotyczące ksiązki
-  if (UI.correctValue(e.target)) {
+  if (UI.formValidation(e.target.children[2])) {
     // ów panel się wysówa
     document.querySelector('.book-features').classList.add('book-features--active');
     // w wysuniętym panelu są buttony, które umożliwiają wpisanie następnej cechy książki
     // poniższa funkcja umożliwia klikniecie w owe przyciski
-    featureBtns.forEach((btn) => {
-      btn.addEventListener('click', downloadingDataToCart);
-    });
+    // featureBtns.forEach((btn) => {
+    //   btn.addEventListener('click', downloadingDataToCart);
+    // });
+    featureBtns.addEventListener('submit', downloadingDataToCart);
+    // addEventListener('submit', downloadingDataToCart);
   }
 };
 
+// LOAD CARTS WITH START PAGE
+document.addEventListener('DOMContentLoaded', UI.displayBooks);
 // LISTENERS
 form1.addEventListener('submit', start);
 
@@ -453,12 +585,12 @@ const deleteStats = (cartData, target) => {
   //  NIE TRZEBA DWOCH PARAMETROW WSZYSTKO MOZNA Z JEDNEGO !!!!
   const findReadingTime = target.parentElement.parentElement.parentElement.children[0].children[4].textContent.indexOf(':');
   const findNumberPages = target.parentElement.parentElement.parentElement.children[0].children[5].textContent.indexOf(':');
+  // MOZE ITERACJA JAKOS??
   const keys = Object.keys(story.stats);
   console.log(keys);
-
-  if (cartData[2].textContent === 'Status: Still') {
+  if (cartData[2].textContent === 'Status: still') {
     story.stats.stillRead.value -= 1;
-  } else if (cartData[2].textContent === 'Status: Read') {
+  } else if (cartData[2].textContent === 'Status: done') {
     story.stats.read.value -= 1;
   }
   if (cartData[3].textContent === 'Language: English') {
@@ -472,13 +604,17 @@ const deleteStats = (cartData, target) => {
   story.stats.numberPages.value -= parseInt(cartData[5].textContent.slice(findNumberPages + 2), 10);
 };
 const deleteBook = (event) => {
+  // MOŻE DA SIĘ ZMIENNA TO ZROBIĆ?????????????
   const cart = event.target.parentElement.parentElement.parentElement;
   const cartList = event.target.parentElement.parentElement.parentElement.childNodes[0].childNodes;
   event.stopPropagation();
+  Store.removeBooks(event.target.parentElement.parentElement.parentElement.children[0].children[0].textContent);
   deleteStats(cartList, event.target);
   cart.parentNode.removeChild(cart);
   addDataToChart();
   addDataToSpeedChart();
+  // render Books Number
+  document.querySelector('.book-section__title > h2 > span').textContent = `(${story.stats.read.value + story.stats.stillRead.value})`;
 };
 
 // LISTENER

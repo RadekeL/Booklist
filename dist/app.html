@@ -29,49 +29,56 @@
                             class="app__input app-panel__book-name">
                         <button class="app-panel__button button" type="submit">Book add</button>
                     </form>
+                    <!--  -->
+                    <!-- <form class="book-features__FORM">
+                        <label for="pages-number">Pages:</label>
+                        <input type="text" placeholder="..." id="pages-number"
+                            class="book-features__input book-features__pages-amount">
+                        <button class="app-panel__button button" type="submit"><i class="fas fa-arrow-right"></i></button>
+                    </form> -->
+                    <!--  -->
                 </section>
                 <section class="book-features">
                     <div class="book-features__window">
-                        <div class="book-features__option">
-                            <h3>Author:</h3>
-                            <input type="text" placeholder="..." class="book-features__input book-features__author">
-                            <i class="book-features__next fas fa-arrow-right"></i>
-                        </div>
-                        <div class="book-features__option">
-                            <h3>Read:</h3>
-                            <button
-                                class="book-features__button book-features__read book-features__done book-features__next"
-                                id="Read">Yes</button>
-                            <button
-                                class="book-features__button book-features__read book-features__in-progress book-features__next"
-                                id="Still">No</button>
-                            <!-- <i class="book-features__fas fas fa-arrow-down"></i> -->
-                        </div>
-                        <div class="book-features__option">
-                            <h3>Language:</h3>
-                            <button
-                                class="book-features__button book-features__language book-features__polish book-features__next"
-                                id="Polish">Polish</button>
-                            <button
-                                class="book-features__button book-features__language book-features__english book-features__next"
-                                id="English">Engilsh</button>
-                            <button
-                                class="book-features__button book-features__language book-features__spanish book-features__next"
-                                id="Spanish">Spanish</button>
-                            <!-- <i class="book-features__fas fas fa-arrow-down"></i> -->
-                        </div>
-                        <div class="book-features__option">
-                            <h3>Time: [s]</h3>
-                            <input type="text" placeholder="..." class="book-features__input book-features__time">
-                            <i class="book-features__next fas book-features__time fa-arrow-right" id="time"></i>
-                        </div>
-                        <div class="book-features__option">
-                            <h3>Pages:</h3>
-                            <input type="text" placeholder="..."
-                                class="book-features__input book-features__pages-amount">
-                            <i class="book-features__next fas book-features__page fa-arrow-right" id="pages"></i>
-                        </div>
+                    <form class="book-features__FORM">
 
+                        <div class="book-features__option book-features__text">
+                                <label for="authpr-name">Author:</label>
+                                <input type="text" placeholder="..." id="author-name"
+                                    class="book-features__input book-features__author">
+                                <button class="app-panel__button button" type="submit"><i class="fas fa-arrow-right"></i></button>
+                            
+                        </div>
+                        <div class="book-features__option book-features__radio">
+                            <legend>Read:</legend>
+                                    <input type="radio" value="done" name="readData" /> Done
+                                    <input type="radio" value="still" name="readData" /> Still Read
+                                    <button class="app-panel__button button" type="submit"><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                        <div class="book-features__option book-features_select">
+                            <legend>Language:</legend>
+                            <select name="language" id="chose-Language">
+                                <option value="Polish">Polsih</option>
+                                <option value="English">English</option>
+                                <option value="Spanish">Spanish</option>
+                            </select>
+                            <button class="app-panel__button button" type="submit"><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                        <div class="book-features__option book-features__number">
+                                <label for="reading-time">Time [h]:</label>
+                                <input type="text" placeholder="..." id="reading-time"
+                                    class="book-features__input book-features__time">
+                                <button class="app-panel__button button" type="submit"><i class="fas fa-arrow-right"></i></button>
+                            
+                        </div>
+                        <div class="book-features__option book-features__number">
+                                <label for="pages-number">Pages:</label>
+                                <input type="text" placeholder="..." id="pages-number"
+                                    class="book-features__input book-features__pages-amount">
+                                <button class="app-panel__button button" type="submit"><i class="fas fa-arrow-right"></i></button>
+                            
+                        </div>
+                    </form>
                     </div>
                 </section>
 
@@ -150,7 +157,7 @@
         </div>
         <section class="book-section">
             <header class="book-section__title">
-                <h2>All Books</h2> <i class="fas fa-angle-down"></i>
+                <h2>Books: <span></span></h2> <i class="fas fa-angle-down"></i>
             </header>
             <section class="book-section__row">
                 <!-- KARTA -->
