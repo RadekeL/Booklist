@@ -4,22 +4,6 @@
     // flex-direction: column;
     // justify-self: flex-start;
     width: 100%;
-    // background-color: yellow;
-}
-
-.app__panel{
-        @include flexbox(center,center);
-    width: 100%;
-    flex-direction: column;
-    // background-color: blueviolet;
-    // margin: 0 auto;
-}
-
-.app__form{
-    @include flexbox(center,center);
-    flex-direction: column;
-    width: 70%;
-    background-color: blanchedalmond;
-    z-index: $zindex-fixed;
-
+    height: 100%;
+    background-color: yellow;
 }
