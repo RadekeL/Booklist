@@ -1,11 +1,13 @@
 .book-features__window{
-    @include flexbox(center,flex-start);
+    @include flexbox(center,center);
     flex-direction: column;
     // position: absolute;
     position: relative;
-    background: linear-gradient(#93a5cf , #e4efe9);
+    background-color: #BFB0A3;
+    
+    // background: linear-gradient(#93a5cf , #e4efe9);
     width: 100%;
-    top: 0%;   // JS: ZMIANA położenia tego paska
+    top: 0%;   // JS: CHANGE POSITION
     left: 0;
     transition: .9s;
     // background-color: red;
@@ -13,27 +15,38 @@
 
 }
 
+.book-features__label{
+    font-weight: bold;
+}
 
 .book-features__option{
     @include flexbox(center,space-around);
     // position: relative; 
-    width: 75%;
+    width: 90%;
     // background-color: red;
-    
+    max-height: $book-features-height;
     line-height: $book-features-height;
+    margin: 0 auto;
 }
 
 .book-features__input{
     width: 25%;
     border-radius: 5px;
-    border: none;
+    border: 1px solid black;
+    &:focus{
+        background-color: #F2EBEE;
+    }
 }
 
 .book-features__button{
-   background-color: black;
-   color: #00B7FF;
+//    background-color: black;
+//    color: #00B7FF;
+    font-size: 16px; 
+    width: 30px;
+    height: 20px;
+    padding: 0;
    border: none;    
-//    padding: 3px 0;
+//    padding: 1px 2px;
 }   
 
 // .book-features__fas{

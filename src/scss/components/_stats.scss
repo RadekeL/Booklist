@@ -1,14 +1,16 @@
 .stats__btn{
     display: flex;
-    flex-direction: column;
-    width: 10%;
-    margin-right: 5%;
+    // flex-direction: column;
+    justify-content: space-between;
+    // align-content: flex-start;
+    width: 100%;
+    // margin-right: 5%;
 }
 
 .stats__toggle{
-    border-left: black 5px solid;   
+    border-bottom: black 2px solid;   
     padding: 10px;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
     color: black;
     transition: .4s;
     cursor: pointer;
@@ -18,14 +20,16 @@
 }
 
 .stats-cont{
+    // position: 
     display: none;
     // width: 0;
     // height: 0;
     // transition: 5s;
     &--active{
         display: flex;
-        width: 100%;
-        height: 100%;
+        // width: 250px;
+        // height: 300px;
+        background-color: white;
     }
 }
 
@@ -36,7 +40,6 @@
     // transition: 5s;
     &--active{
         display: flex;
-        width: 100%;
-        height: 100%;
+        background-color: white;
     }
 }

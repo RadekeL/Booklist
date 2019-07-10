@@ -1,33 +1,41 @@
-.app__title{
-    @include flexbox(center,center);
+.app__title {
+    @include flexbox(center, center);
     text-align: center;
     font-size: 1.5rem;
     font-family: $josefin-sans;
-    height: 10vh;
+    // height: 10vh;
 }
 
 
-.app__input{
-    @include flexbox(center,center);
+.app__input {
+    @include flexbox(center, center);
     margin: 1vh 4vh 4vh 4vh;
-    &::placeholder{
+
+    &::placeholder {
         font-size: .9rem;
         color: rgb(146, 146, 146);
     }
+
+    &:focus {
+        background-color: #F2EBEE;
+    }
 }
 
-.app__panel{
-    @include flexbox(center,center);
-width: 100%;
-flex-direction: column;
-background-color: blueviolet;
-// margin: 0 auto;
+.app__panel {
+    @include flexbox(center, center);
+    width: 100%;
+    flex-direction: column;
+    // background-color: blueviolet;
+    // margin: 0 auto;
 }
 
-.app__form{
-@include flexbox(center,center);
-flex-direction: column;
-width: 100%;
-background-color: blanchedalmond;
-z-index: $zindex-fixed;
+.app__form {
+    @include flexbox(center, center);
+    flex-direction: column;
+    width: 100%;
+    // color: white;
+    // background-color: blanchedalmond;
+    padding: 4vw;
+    background-color: #8C4637;
+    z-index: $zindex-fixed;
 }
