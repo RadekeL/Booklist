@@ -1,19 +1,33 @@
-.app-stats{
+.app-stats {
+    display: flex;
+    flex-direction: column;
+    @include boxSize(100vw, 45px);
     position: fixed;
     top: 0;
     left: 0;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 10vw;
-    // padding-top: 10px;
-    transition: .5s;
-    z-index: 400;
+
     background-color: white;
-    &:hover{
+    transition: 1s;
+    z-index: $zindex-fixed;
+
+    &:hover {
         right: 3%;
     }
-    &--active{
-        width: 100%;
+
+    &--active {
+        width: $full-of-parent;
+    }
+
+    @include respond-to(medium) {
+        width: 0;
+        position: unset;
+
+        &--active {
+            min-width: 50%;
+        }
+
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        transition: .9s
     }
 }

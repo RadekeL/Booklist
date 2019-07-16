@@ -1,0 +1,24 @@
+.errors {
+    display: none;
+    @include position(50%, 50%, fixed);
+    @include boxSize(240px, 43px);
+    line-height: 43px;
+    text-align: center;
+    color: rgb(194, 0, 0);
+    background-color: rgb(255, 125, 125);
+    border: 2px solid rgb(136, 7, 7);
+    z-index: $zindex-tooltip;
+    transition: .7s;
+
+    &--active {
+        display: block;
+    }
+
+    @include respond-to(small) {
+        top: 52%;
+    }
+
+    @include respond-to(large) {
+        top: 10%;
+    }
+}

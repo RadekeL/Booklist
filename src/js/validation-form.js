@@ -58,22 +58,35 @@ export default class Validation {
     if (arr.length > 0) return false;
     return true;
   }
-  // DOPOPRAWY
+
+  static showError(dataType) {
+    const errorSection = document.querySelector('.errors');
+    errorSection.textContent = `Invalid. Please enter a ${dataType} data.`;
+    errorSection.classList.add('errors--active');
+
+    setTimeout(() => {
+      errorSection.classList.remove('errors--active');
+    }, 1500);
+  }
 
   static formValidation(...inputs) {
     let posiitive = false;
     const validationArray = [];
+    let dataType = '';
     inputs.forEach((input) => {
       if (input.parentElement.classList[1] === 'book-features__number') {
         posiitive = Validation.inputNumberValidation(input);
+        dataType = 'numeric';
       } else if (input.parentElement.classList[1] === 'book-features__radio') {
         posiitive = Validation.inputRadioValidation(input);
       } else {
         posiitive = Validation.inputTextValidation(input);
+        dataType = 'text';
       }
 
       if (posiitive === false) {
         validationArray.push(0);
+        Validation.showError(dataType);
       }
     });
     return Validation.formVerify(validationArray);

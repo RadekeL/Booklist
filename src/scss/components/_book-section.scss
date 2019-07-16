@@ -1,26 +1,24 @@
-.book-section__title{
-    @include flexbox(center,space-between);
+.book-section__title {
+    @include flexbox(center, space-between);
     align-self: center;
-    width: 100%;
-    // height: 10%;
+    width: $full-of-parent;
     font-family: $muli;
     font-size: 1.7rem;
-    // background-color: chartreuse;
     border-bottom: 3px solid black;
-    padding: 0 0 5px 0; 
+    padding: 0 0 5px 0;
     margin: 0 auto;
 }
 
 
-.book-section__row{
+.book-section__row {
     display: none;
-    width: 100%;
+    max-width: 850px;
     height: 25vh;
-        
+
     flex-wrap: wrap;
     transition: 2s;
-    // background-color: red;
-    &--active{
-        @include flexbox(center,space-around);
+
+    &--active {
+        @include flexbox(center, space-around);
     }
 }

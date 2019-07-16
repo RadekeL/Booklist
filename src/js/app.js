@@ -1,26 +1,15 @@
-/* eslint-disable max-len */
-/* eslint-disable max-len */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable prefer-const */
 import '../scss/main.scss';
 import Store from './localSotrage-handler';
-import Story from './storyStats';
-import Book from './newBook';
-import {
-  readingStats, speedReadingStats, addDataToChart, addDataToSpeedChart, renderChart,
-} from './charts';
-// import { speedReadingStats } from './charts';
+import { renderChart } from './charts';
 import { UI, story } from './UI-handler';
 import CreateCarts from './cart-creator';
 import Validation from './validation-form';
-// import CreateCart from './cart-creator';
+import Book from './newBook';
 
 const bookApp = {
   init: function init() {
     // IMPORT
     this.formOperation = new Validation();
-    // this.formOperation = this.forms.constructor;
     // VARIABLES
     this.formPosition = 0;
     this.initialForm = document.querySelector('.book-features__FORM');
@@ -75,6 +64,7 @@ const bookApp = {
         bookCartIconClass: bookInstance.bookCardIconClass,
         sectionTitle: bookInstance.sectionTitles,
       });
+
       UI.addToStory(featuresBook);
       Store.renderStorageData(bookInstance, story.stats);
       UI.updateInterface();
@@ -91,17 +81,25 @@ const bookApp = {
   },
 
   displaySpeedChart: function displaySpeedChart() {
+    if (document.querySelector('.stats-cont').classList.contains('stats-cont--active')) {
+      document.querySelector('.stats-cont').classList.remove('stats-cont--active');
+    } else {
+      document.querySelector('.app-stats').classList.toggle('app-stats--active');
+    }
     document.querySelector('.stats-speed').classList.toggle('stats-speed--active');
-    document.querySelector('.app-stats').classList.toggle('app-stats--active');
   },
 
-  displayBooksList: function displayBooksList(e) {
+  displayBooksList: function displayBooksList() {
     document.querySelector('.book-section__row').classList.toggle('book-section__row--active');
     this.activeCartHandler();
   },
   displayReadingChart: function displayReadingChart() {
+    if (document.querySelector('.stats-speed').classList.contains('stats-speed--active')) {
+      document.querySelector('.stats-speed').classList.remove('stats-speed--active');
+    } else {
+      document.querySelector('.app-stats').classList.toggle('app-stats--active');
+    }
     document.querySelector('.stats-cont').classList.toggle('stats-cont--active');
-    document.querySelector('.app-stats').classList.toggle('app-stats--active');
   },
 
   deleteBook: function deleteBook(event) {

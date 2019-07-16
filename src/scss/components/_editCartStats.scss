@@ -1,8 +1,6 @@
-// BUDUJE FUNKCJE EDIT
-.book-card___change-values{
+.book-card___change-values {
     display: none;
     position: absolute;
-    // display: grid;
     height: 90%;
 
     font-size: 15px;
@@ -14,21 +12,18 @@
     filter: opacity(0.9);
 }
 
-#page_value, #hours_value{
+#page_value,
+#hours_value {
     background-color: inherit;
     border: none;
     margin-bottom: 3px;
     border-bottom: 1px solid black;
 }
 
-// label{
-//     width: 30%;
-// }
-#page_value{
+#page_value {
     width: 30%;
-    // flex-basis: 50%;
-    // grid-area: 
 }
-#hours_value{
+
+#hours_value {
     width: 30%;
 }

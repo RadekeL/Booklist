@@ -1,5 +1,17 @@
 /* eslint-disable object-curly-newline */
 export default class CreateCart {
+  static smallerFontSize(cartLists) {
+    if (cartLists[0].children[0].textContent.length > 20) {
+      cartLists.forEach((list, index) => {
+        if (index === 0) {
+          list.classList.add('book-card__title--smaller');
+        } else {
+          list.classList.add('book-card__feature--smaller');
+        }
+      });
+    }
+  }
+
   static createNewElement({ el, parent, className, text, titles }) { // dodana nowa wlascwosc arg
     const element = el;
     parent.appendChild(el);
@@ -105,6 +117,7 @@ export default class CreateCart {
 
     (function createFeatureList() {
       const MAX = 6;
+      const cartList = [];
       for (let i = 0; i < MAX; i += 1) {
         const liEl = document.createElement('li');
         that.createNewElement({
@@ -113,7 +126,9 @@ export default class CreateCart {
           className: (`${i === 0 ? cartsTitle[0] : cartsTitle[1]}`),
           text: bookData[i],
           titles: i > 0 ? sectionTitle[i - 1] : '' });
+        cartList.push(liEl);
       }
+      CreateCart.smallerFontSize(cartList);
     }());
 
     (function createBtnCartSection() {

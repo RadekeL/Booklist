@@ -1,5 +1,13 @@
+body{
+    min-width: 100vw;
+    overflow-x: hidden;
+
+}
 h3{
     font-family: $muli;
     font-weight: bold;
-    // padding-right: 1vw;
+}
+
+label{
+    font-size: .8rem
 }

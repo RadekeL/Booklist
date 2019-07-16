@@ -28,7 +28,7 @@ export const readingStats = new Chart(booksChart, {
   },
   options: {
     responsive: 'true',
-    maintainAspectRatio: 'true',
+    maintainAspectRatio: 'false',
   },
 });
 export const speedReadingStats = new Chart(speedOfReadingChart, {
@@ -45,7 +45,7 @@ export const speedReadingStats = new Chart(speedOfReadingChart, {
   },
   options: {
     responsive: 'true',
-    maintainAspectRatio: 'true',
+    maintainAspectRatio: 'false',
   },
 });
 

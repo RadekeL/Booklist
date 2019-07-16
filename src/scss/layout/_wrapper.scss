@@ -1,20 +1,41 @@
 .page-wraper{
     @include flexbox(center,space-around);
+    position: relative;
     flex-direction: column;
-    width: 75vw;
-    height: 100vh;
+    @include boxSize(75vw, 100vh);
     margin: 0 auto;
-
-//    background-color: sandybrown;
+   @include respond-to(medium) {
+    align-items: center;
+    height: 90vh;
+   }
 }
 .page-container{
     @include flexbox(center,space-around);
-    flex-direction: column;
     position: relative;
-    width: 95%;
-    height: 40%;
-    // margin: 0 auto;
+    flex-direction: column;
+    @include boxSize(95%, 20%);
 
-//    background-color: salmon;
+    @include respond-to(medium) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        @include boxSize(120%, 20%);
+        align-items: space-around;
+        justify-content: space-around;
+    }
+    @include respond-to(large){
+        height: 35%;
+    }
 }
+
+.app1{
+    @include flexbox(center, center);
+    align-items: flex-start;
+    flex-direction: row-reverse;
+    @include boxSize($full-of-parent, $full-of-parent);
+}
+
+    // .xd{
+    //     width: 30vw;
+    //     height: 20vh;
+    // }
 

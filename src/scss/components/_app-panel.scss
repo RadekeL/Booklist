@@ -1,15 +1,15 @@
 .app__title {
     @include flexbox(center, center);
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-family: $josefin-sans;
-    // height: 10vh;
 }
 
 
 .app__input {
     @include flexbox(center, center);
     margin: 1vh 4vh 4vh 4vh;
+    border-radius: 5%;
 
     &::placeholder {
         font-size: .9rem;
@@ -25,17 +25,35 @@
     @include flexbox(center, center);
     width: 100%;
     flex-direction: column;
-    // background-color: blueviolet;
-    // margin: 0 auto;
+    transition: .9s;
+
+    @include respond-to(medium) {
+        justify-content: flex-end;
+    }
+
 }
 
 .app__form {
     @include flexbox(center, center);
     flex-direction: column;
-    width: 100%;
-    // color: white;
-    // background-color: blanchedalmond;
-    padding: 4vw;
-    background-color: #8C4637;
-    z-index: $zindex-fixed;
+    @include boxSize($full-of-parent, 20vh);
+
+    color: $bon-jour;
+    background-color: $sanguine-brown;
+    border-radius: 2%;
+    
+    padding: 6vw 5vw;
+    margin-top: 13vh;
+
+    z-index: $zindex-dropdown;
+
+    @include respond-to(small) {
+        @include boxSize(60%, 10vh);
+        margin-top: 15vh;
+    }
+
+    @include respond-to(medium) {
+        @include boxSize(50%, 6vh);
+        margin: 0;
+    }
 }

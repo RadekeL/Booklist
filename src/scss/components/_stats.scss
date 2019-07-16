@@ -1,45 +1,82 @@
-.stats__btn{
-    display: flex;
-    // flex-direction: column;
-    justify-content: space-between;
-    // align-content: flex-start;
-    width: 100%;
-    // margin-right: 5%;
+.stats__btn {
+    @include flexbox(center, space-between);
+    @include boxSize ($full-of-parent, 10vh);
+
+    @include respond-to(medium) {
+        width: 10%;
+        align-items: flex-end;
+        flex-direction: column;
+    }
 }
 
-.stats__toggle{
-    border-bottom: black 2px solid;   
-    padding: 10px;
+.stats__toggle {
     font-size: 1.2rem;
     color: black;
+    border-bottom: black 2px solid;
+    padding: 10px;
     transition: .4s;
     cursor: pointer;
-    &:hover{
+
+    &:hover {
         color: #FA8072;
     }
-}
 
-.stats-cont{
-    // position: 
-    display: none;
-    // width: 0;
-    // height: 0;
-    // transition: 5s;
-    &--active{
-        display: flex;
-        // width: 250px;
-        // height: 300px;
-        background-color: white;
+    @include respond-to(small) {
+        font-size: 1.6rem;
+        padding: 5px 25px;
+    }
+
+    @include respond-to(medium) {
+        box-sizing: border-box;
+        font-size: 1.7rem;
+        border-right: black 2px solid;
+        border-bottom: none;
     }
 }
 
-.stats-speed{
+.stats-cont {
     display: none;
-    // width: 0;
-    // height: 0;
-    // transition: 5s;
-    &--active{
-        display: flex;
+    transition: 5s;
+
+    &--active {
+        display: block;
         background-color: white;
+        z-index: $zindex-modal-backdrop;    
+        @include respond-to(small) {
+            width: 70%;
+            margin: 50px auto;
+        }
+
+        @include respond-to(medium) {
+            margin: 0 auto;
+        }
     }
+}
+
+.stats-speed {
+    display: none;
+
+    &--active {
+        display: block;
+        background-color: white;
+        z-index: $zindex-modal-backdrop;
+        @include respond-to(small) {
+            width: 70%;
+            margin: 50px auto;
+        }
+
+        @include respond-to(medium) {
+            margin: 0 auto;
+
+        }
+    }
+}
+
+
+#stats__booksChart {
+    @include chartStyle();
+}
+
+#stats__speed {
+    @include chartStyle();
 }

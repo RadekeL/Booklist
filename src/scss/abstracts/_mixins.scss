@@ -4,11 +4,16 @@
     justify-content: $justify;
 }
 
-@mixin position($top,$left) {
-    position: absolute;
+@mixin position($top,$left, $position: absolute) {
+    position: $position;
     top: $top;
     left: $left;
     transform: translate(-50%,-50%)
+}
+
+@mixin boxSize($width, $height) {
+  width: $width;
+  height: $height;
 }
 
 @mixin zoom-photo($scale, $posX: 50%, $posY: 50%){
@@ -18,20 +23,28 @@
 
 @mixin respond-to($breakpoint) {
     @if $breakpoint == small {
-      @media (max-width: 768px) {
+      @media (min-width: 768px) {
         @content;
       }
     }
   
     @else if $breakpoint == medium {
-      @media (max-width: 992px) {
+      @media (min-width: 992px) {
         @content;
       }
     }
   
     @else if $breakpoint == large {
-      @media (max-width: 1200px) {
+      @media (min-width: 1200px) {
         @content;
       }
+    }
+  }
+
+  @mixin chartStyle() {
+    border-bottom: 1px solid black;
+    @include respond-to(small) {
+        background-color: white;
+        border: 1px solid black;
     }
   }

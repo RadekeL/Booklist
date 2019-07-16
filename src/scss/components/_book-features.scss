@@ -1,58 +1,43 @@
-.book-features__window{
-    @include flexbox(center,center);
+.book-features__window {
+    @include flexbox(center, center);
     flex-direction: column;
-    // position: absolute;
     position: relative;
-    background-color: #BFB0A3;
-    
-    // background: linear-gradient(#93a5cf , #e4efe9);
-    width: 100%;
-    top: 0%;   // JS: CHANGE POSITION
+    width: $full-of-parent;
+    top: 0%; // JS: CHANGE POSITION
     left: 0;
     transition: .9s;
-    // background-color: red;
-
-
 }
 
-.book-features__label{
+.book-features__label {
     font-weight: bold;
 }
 
-.book-features__option{
-    @include flexbox(center,space-around);
-    // position: relative; 
+.book-features__option {
+    @include flexbox(center, space-around);
     width: 90%;
-    // background-color: red;
     max-height: $book-features-height;
     line-height: $book-features-height;
     margin: 0 auto;
-}
 
-.book-features__input{
-    width: 25%;
-    border-radius: 5px;
-    border: 1px solid black;
-    &:focus{
-        background-color: #F2EBEE;
+    @include respond-to(small) {
+        max-height: $book-features-desktop-height;
+        line-height: $book-features-desktop-height;
     }
 }
 
-.book-features__button{
-//    background-color: black;
-//    color: #00B7FF;
-    font-size: 16px; 
-    width: 30px;
-    height: 20px;
-    padding: 0;
-   border: none;    
-//    padding: 1px 2px;
-}   
+.book-features__input {
+    width: 25%;
+    border-radius: 5px;
+    border: 1px solid black;
 
-// .book-features__fas{
-//     position: absolute;
-//     top: 50%;
-//     right: 5%;
-//     transform: translateY(-50%);
-//     font-size: 1.2rem;
-// }
+    &:focus {
+        background-color: $soft-peach;
+    }
+}
+
+.book-features__button {
+    font-size: 16px;
+    @include boxSize(30px, 20px);
+    padding: 0;
+    border: none;
+}

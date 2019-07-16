@@ -1,5 +1,13 @@
-.book-section{
-    width: 100%;
-    height: 20%;
-    // background-color: red;
+.book-section {
+    @include flexbox(center);
+    flex-direction: column;
+    @include boxSize(100%, 20%);
+
+    @include respond-to(small) {
+        width: 85%;
+    }
+
+    @include respond-to(medium) {
+        width: 60%;
+    }
 }
