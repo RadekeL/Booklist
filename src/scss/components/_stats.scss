@@ -1,4 +1,4 @@
-.stats__btn {
+.app__btn {
     @include flexbox(center, space-between);
     @include boxSize ($full-of-parent, 10vh);
 
@@ -9,7 +9,7 @@
     }
 }
 
-.stats__toggle {
+.app__toggle {
     font-size: 1.2rem;
     color: black;
     border-bottom: black 2px solid;
@@ -34,7 +34,7 @@
     }
 }
 
-.stats-cont {
+.app__cont {
     display: none;
     transition: 5s;
 
@@ -53,7 +53,7 @@
     }
 }
 
-.stats-speed {
+.app__speed {
     display: none;
 
     &--active {

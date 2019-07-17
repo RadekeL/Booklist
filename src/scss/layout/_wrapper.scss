@@ -27,7 +27,7 @@
     }
 }
 
-.app1{
+.app{
     @include flexbox(center, center);
     align-items: flex-start;
     flex-direction: row-reverse;

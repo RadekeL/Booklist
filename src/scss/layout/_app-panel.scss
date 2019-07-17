@@ -1,4 +1,4 @@
-.app {
+.app__main {
     @include flexbox(center, center);
     width: $full-of-parent;
     height: $full-of-parent;

@@ -8,8 +8,6 @@ import Book from './newBook';
 
 const bookApp = {
   init: function init() {
-    // IMPORT
-    this.formOperation = new Validation();
     // VARIABLES
     this.formPosition = 0;
     this.initialForm = document.querySelector('.book-features__FORM');
@@ -81,12 +79,12 @@ const bookApp = {
   },
 
   displaySpeedChart: function displaySpeedChart() {
-    if (document.querySelector('.stats-cont').classList.contains('stats-cont--active')) {
-      document.querySelector('.stats-cont').classList.remove('stats-cont--active');
+    if (document.querySelector('.app__cont').classList.contains('app__cont--active')) {
+      document.querySelector('.app__cont').classList.remove('app__cont--active');
     } else {
-      document.querySelector('.app-stats').classList.toggle('app-stats--active');
+      document.querySelector('.app__stats').classList.toggle('app__stats--active');
     }
-    document.querySelector('.stats-speed').classList.toggle('stats-speed--active');
+    document.querySelector('.app__speed').classList.toggle('app__speed--active');
   },
 
   displayBooksList: function displayBooksList() {
@@ -94,12 +92,12 @@ const bookApp = {
     this.activeCartHandler();
   },
   displayReadingChart: function displayReadingChart() {
-    if (document.querySelector('.stats-speed').classList.contains('stats-speed--active')) {
-      document.querySelector('.stats-speed').classList.remove('stats-speed--active');
+    if (document.querySelector('.app__speed').classList.contains('app__speed--active')) {
+      document.querySelector('.app__speed').classList.remove('app__speed--active');
     } else {
-      document.querySelector('.app-stats').classList.toggle('app-stats--active');
+      document.querySelector('.app__stats').classList.toggle('app__stats--active');
     }
-    document.querySelector('.stats-cont').classList.toggle('stats-cont--active');
+    document.querySelector('.app__cont').classList.toggle('app__cont--active');
   },
 
   deleteBook: function deleteBook(event) {
@@ -143,8 +141,7 @@ const bookApp = {
   editCart: function editCart(event) {
     event.stopImmediatePropagation();
     event.preventDefault();
-    const editForm = event.target.parentElement;
-
+    const editForm = event.target.parentElement.parentElement;
     // CHANGE CART VALUE
     if (Validation.formValidation(editForm.hours_value, editForm.page_value)) {
       const thisCartWrap = editForm.parentElement.parentElement;
@@ -165,6 +162,7 @@ const bookApp = {
 
       thisCartWrap.querySelector('.book-card___change-values').style.display = 'none';
       renderChart(story);
+      Validation.clearInput([editForm]);
     }
   },
 

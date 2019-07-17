@@ -14,6 +14,8 @@ export default class CreateCart {
 
   static createNewElement({ el, parent, className, text, titles }) { // dodana nowa wlascwosc arg
     const element = el;
+    const title = titles || '';
+    // title === undefined ? title = '' : null;
     parent.appendChild(el);
     if (Array.isArray(className)) {
       for (let i = 0; i < className.length; i += 1) {
@@ -24,7 +26,7 @@ export default class CreateCart {
     }
 
     if (text !== undefined) {
-      element.innerHTML = `${titles} <span>${text}</span>`;
+      element.innerHTML = `${title} <span>${text}</span>`;
     }
   }
 
@@ -105,12 +107,13 @@ export default class CreateCart {
         parent: form,
         id: 'hours_value',
         text: 'Hours: +',
-        className: 'book-card__edit-value' });
+        className: 'book-card__edit-value',
+        br: true });
 
       that.createNewElement({
         el: button,
         parent: form,
-        className: 'book-card__form-button',
+        className: ['book-card__form-button', 'button'],
         text: 'Change!' });
       button.setAttribute('type', 'submit');
     }());

@@ -1,5 +1,3 @@
-<!-- Complete raw page without additional sections, ddd animation to showe more options, and create list to booklist -->
-<!-- popraw na semantyczny HTML -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,28 +14,27 @@
 <body>
     <div class="page-wraper">
         <div class="page-container">
-            <!-- .stats -->
             <header class="app__header header">
                 <h1 class="header__title">Booklist</h1>
             </header>
-            <main class="app1">
-                <section class="app-stats">
-                    <article class="stats__btn">
-                        <i class="stats__toggle fas fa-chart-bar"></i>
-                        <i class="stats__toggle fas fa-book-open"></i>
+            <main class="app">
+                <section class="app__stats">
+                    <article class="app__btn">
+                        <i class="app__toggle fas fa-chart-bar"></i>
+                        <i class="app__toggle fas fa-book-open"></i>
                     </article>
                     <!-- .stats__chart-cont -->
-                    <div class="stats-cont stats-chart">
+                    <div class="app__cont app__chart">
                         <canvas id="stats__booksChart"></canvas>
                     </div>
                     <!-- .stats__chart-speed -->
-                    <div class="stats-speed stats-chart">
+                    <div class="app__speed app__chart">
                         <canvas id="stats__speed"></canvas>
                     </div>
                 </section>
-                
-                <main class="app">
-    
+
+                <section class="app__main">
+
                     <section class="app__panel">
                         <!--  -->
                         <form class="app__form">
@@ -47,19 +44,19 @@
                                 class="app__input app-panel__book-name">
                             <button class="app-panel__button button" type="submit">Book add</button>
                         </form>
-    
+
                     </section>
                     <section class="book-features">
                         <div class="book-features__window">
                             <form class="book-features__FORM">
-    
+
                                 <div class="book-features__option book-features__text">
                                     <label class="book-features__label" for="authpr-name">Author:</label>
                                     <input type="text" placeholder="..." id="author-name"
                                         class="book-features__input book-features__author">
                                     <button class="book-features__button button" type="submit"><i
                                             class="fas fa-arrow-right"></i></button>
-    
+
                                 </div>
                                 <div class="book-features__option book-features__radio">
                                     <label class="book-features__label">Read:</label>
@@ -84,7 +81,7 @@
                                         class="book-features__input book-features__time">
                                     <button class="book-features__button button" type="submit"><i
                                             class="fas fa-arrow-right"></i></button>
-    
+
                                 </div>
                                 <div class="book-features__option book-features__number">
                                     <label class="book-features__label" for="pages-number">Pages:</label>
@@ -92,16 +89,16 @@
                                         class="book-features__input book-features__pages-amount">
                                     <button class="book-features__button button" type="submit"><i
                                             class="fas fa-arrow-right"></i></button>
-    
+
                                 </div>
                             </form>
                         </div>
                     </section>
-    
-    
-                </main>
+
+
+                </section>
             </main>
-            
+
 
 
         </div>
@@ -119,7 +116,6 @@
             </section>
         </section>
     </div>
-
 </body>
 
 </html>
