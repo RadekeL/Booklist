@@ -30,15 +30,28 @@
         top: 20%;
 
         &--active {
-            width: 38%;
+            // width: 38%;
+            @include boxSize(38%, $book-features-desktop-height);
             top: 140%;
         }
 
-        @include respond-to(large) {
-            &--active {
-                width: 28%;
-                top: 100%;
-            }
+        &--smaller {
+            width: 60%;
+        }
+    }
+    @include respond-to(large) {
+        &--active {
+            width: 28%;
+            top: 100%;
+        }
+
+        &--smaller {
+            width: 40%;
+        }
+    }
+    @include respond-to(larger) {
+        &--active {
+            top: 150%;
         }
     }
 }

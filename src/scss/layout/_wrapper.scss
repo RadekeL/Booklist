@@ -1,16 +1,26 @@
-.page-wraper{
-    @include flexbox(center,space-around);
+.page-wraper {
+    @include flexbox(center, space-around);
     position: relative;
     flex-direction: column;
     @include boxSize(75vw, 100vh);
     margin: 0 auto;
-   @include respond-to(medium) {
-    align-items: center;
-    height: 90vh;
-   }
+
+    @include respond-to(medium) {
+        align-items: center;
+        height: 100vh;
+    }
+
+    @include respond-to(large) {
+        height: 90vh;
+    }
+
+    @include respond-to(larger) {
+        height: 60vh;
+    }
 }
-.page-container{
-    @include flexbox(center,space-around);
+
+.page-container {
+    @include flexbox(center, space-around);
     position: relative;
     flex-direction: column;
     @include boxSize(95%, 20%);
@@ -22,20 +32,15 @@
         align-items: space-around;
         justify-content: space-around;
     }
-    @include respond-to(large){
+
+    @include respond-to(large) {
         height: 35%;
     }
 }
 
-.app{
+.app {
     @include flexbox(center, center);
     align-items: flex-start;
     flex-direction: row-reverse;
     @include boxSize($full-of-parent, $full-of-parent);
 }
-
-    // .xd{
-    //     width: 30vw;
-    //     height: 20vh;
-    // }
-

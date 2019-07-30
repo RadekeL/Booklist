@@ -85,6 +85,7 @@ const bookApp = {
       document.querySelector('.app__stats').classList.toggle('app__stats--active');
     }
     document.querySelector('.app__speed').classList.toggle('app__speed--active');
+    document.querySelector('.book-features').classList.toggle('book-features--smaller');
   },
 
   displayBooksList: function displayBooksList() {
@@ -98,6 +99,7 @@ const bookApp = {
       document.querySelector('.app__stats').classList.toggle('app__stats--active');
     }
     document.querySelector('.app__cont').classList.toggle('app__cont--active');
+    document.querySelector('.book-features').classList.toggle('book-features--smaller');
   },
 
   deleteBook: function deleteBook(event) {
