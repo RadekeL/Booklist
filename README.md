@@ -1,7 +1,10 @@
 # Booklist
-The app save all read books into carts. Here I used the chart.js library to visualize reading statistics base on stores data.
-Booklist is also Resposive Web Design (Mobile first).
+The application saves all read books in the form of cards.In the project I've used chart.js to visualize reading statistics based on stored data. Booklist is based on Resposive Web Design (Mobile first).
 
-
-Booklist app link:
-https://radekel.github.io/Booklist/dist/app.html
+This project includes technologies such as:
+  - Sass,
+  - Webpack,
+  - EsLint,
+  - Git,
+  
+Booklist app link:https://radekel.github.io/Booklist/dist/app.html
