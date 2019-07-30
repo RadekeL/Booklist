@@ -39,8 +39,18 @@ export default class Validation {
     return false;
   }
 
+  static isTImeData(field) {
+    if (/^[0-9:]+$/.test(field.value)) return true;
+    return false;
+  }
+
   static inputNumberValidation(input) {
     if (Validation.isEmptyArea(input.value.trim()) && Validation.isNumber(input)) return true;
+    return false;
+  }
+
+  static inputTimeValidation(input) {
+    if (Validation.isEmptyArea(input.value.trim()) && Validation.isTImeData(input)) return true;
     return false;
   }
 
@@ -74,7 +84,6 @@ export default class Validation {
     const validationArray = [];
     let dataType = '';
     inputs.forEach((input) => {
-      console.log(input.type);
       if (input.type === 'radio') {
         posiitive = Validation.inputRadioValidation(input);
       } else if (input.type === 'text' || input.type === 'select-one') {
@@ -82,7 +91,8 @@ export default class Validation {
         dataType = 'text';
       } else if (input.type === 'number') {
         posiitive = this.inputNumberValidation(input);
-        console.log(input.value);
+      } else if (input.type === 'time') {
+        posiitive = this.inputTimeValidation(input);
       }
 
       if (posiitive === false) {
