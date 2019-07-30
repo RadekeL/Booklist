@@ -74,14 +74,15 @@ export default class Validation {
     const validationArray = [];
     let dataType = '';
     inputs.forEach((input) => {
-      if (input.parentElement.classList[1] === 'book-features__number') {
-        posiitive = Validation.inputNumberValidation(input);
-        dataType = 'numeric';
-      } else if (input.parentElement.classList[1] === 'book-features__radio') {
+      console.log(input.type);
+      if (input.type === 'radio') {
         posiitive = Validation.inputRadioValidation(input);
-      } else {
+      } else if (input.type === 'text' || input.type === 'select-one') {
         posiitive = Validation.inputTextValidation(input);
         dataType = 'text';
+      } else if (input.type === 'number') {
+        posiitive = this.inputNumberValidation(input);
+        console.log(input.value);
       }
 
       if (posiitive === false) {
